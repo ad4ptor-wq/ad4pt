@@ -4,8 +4,8 @@
  My Cybersecurity Write-ups
 
 Hi there  
-I’m [Your Name / ADRedmi], learning penetration testing and documenting my progress here.  
-This repository contains my CTF challenges, TryHackMe rooms, and lab write-ups.  
+I’m Alex, learning penetration testing and documenting my progress here.  
+This repository contains my CTF challenges, and lab write-ups.  
 
  Structure
 - `easy/` → beginner-level challenges  
