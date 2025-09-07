@@ -97,7 +97,7 @@ Already had root access directly via the exploit.
 cd /root
 cat flag.txt
 ```
-✅ Root flag retrieved  
+ Root flag retrieved  
 
 ---
 
