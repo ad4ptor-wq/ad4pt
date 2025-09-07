@@ -2,7 +2,7 @@
 
 ## Overview
 - **Room:** Lookup  
-- **Difficulty:** Medium  
+- **Difficulty:** easy  
 - **Tags:** Web, Fuzzing, Hydra, PrivEsc  
 
 ---
@@ -11,7 +11,7 @@
 
 ### Nmap
 ```bash
-nmap -sC -sV -oN nmap_lookup.txt <IP>
+nmap -sC -sV -oN <IP>
 ```
 
 **Open Ports:**
