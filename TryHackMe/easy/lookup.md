@@ -1,4 +1,4 @@
-# TryHackMe - SquirrelMail
+# Lookup-easy
 
  Reconnaissance:
 Port and service scanning:
@@ -72,5 +72,6 @@ With SMB, always run enum4linux + smbmap → often reveals users and useful file
 Burp Suite helps to confirm endpoints for Hydra.
 
 Older distros (like Ubuntu 16) are good candidates for quick PwnKit escalation.
+
 
 For CMS (e.g., Cuppa), keep a checklist of known vulnerable endpoints.
