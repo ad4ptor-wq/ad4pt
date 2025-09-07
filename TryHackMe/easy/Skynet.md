@@ -2,7 +2,7 @@
 
 ## Overview
 - **Room:** Skynet  
-- **Difficulty:** Easy-Medium  
+- **Difficulty:** Easy 
 - **Tags:** SMB, WordPress, RCE, PrivEsc  
 
 ---
@@ -11,7 +11,7 @@
 
 ### Nmap
 ```bash
-nmap -sC -sV -oN nmap_skynet.txt <IP>
+sudo nmap -sC -sV -oN <IP>
 ```
 
 **Open Ports:**
