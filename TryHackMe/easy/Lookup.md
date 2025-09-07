@@ -1,6 +1,6 @@
 # TryHackMe - Lookup (Easy)
 
-## Reconnaissance
+Reconnaissance
 I started with standard scanning:
 
 
