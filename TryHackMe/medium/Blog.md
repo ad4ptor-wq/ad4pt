@@ -11,7 +11,7 @@
 
 ### Nmap
 ```bash
-nmap -sC -sV -oN nmap_blog.txt <IP>
+nmap -sC -sV -oN <IP>
 ```
 
 **Open Ports:**
@@ -83,7 +83,7 @@ Analyzed with Ghidra → program checks `admin` environment variable.
 
 ```bash
 export admin=1
-./checker
+/usr/bin/checker
 whoami
 root
 ```
