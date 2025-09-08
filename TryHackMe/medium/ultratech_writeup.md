@@ -11,7 +11,7 @@
 Scan all ports:
 
 ```bash
-nmap -sC -sV -Pn -p- -oN nmap_ultratech.txt 10.10.10.10
+nmap -sC -sV -Pn -p- -oN  10.10.10.10
 ```
 
 **Results:**
