@@ -15,7 +15,7 @@
 Quick port scan:
 
 ```bash
-nmap -sC -sV -oN nmap_initial.txt <IP>
+sudo nmap -sC -sV -oN <IP>
 ```
 
 
