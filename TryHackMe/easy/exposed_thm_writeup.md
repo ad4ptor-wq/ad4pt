@@ -150,14 +150,14 @@ Root shell obtained.
 
 ---
 
-## ✅ Flags
+##  Flags
 
 - **User flag:** `THM{USER_FLAG_1231_EXPOSE}`  
 - **Root flag:** `THM{ROOT_EXPOSED_1001}`
 
 ---
 
-## 💡 Conclusion
+##  Conclusion
 
 We successfully completed the following steps:
 
