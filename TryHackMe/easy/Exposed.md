@@ -23,7 +23,7 @@ sudo nmap -sC -sV -oN <IP>
 Full port scan:
 
 ```bash
-nmap -p- -oN nmap_full.txt <IP>
+nmap -p- -oN <IP>
 ```
 
 
