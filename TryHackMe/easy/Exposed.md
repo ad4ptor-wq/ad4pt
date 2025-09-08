@@ -66,7 +66,7 @@ python3 sqlmap.py -r expose.req --dump
 
 **Database credentials found:**
 - Email: `hacker@root.thm`  
-- Password: `password123`
+- Password: `password`
 
 Use them to log in to the site.
 
