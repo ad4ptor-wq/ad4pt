@@ -96,7 +96,7 @@ exploit
 To upgrade the shell to a stable TTY:
 
 ```bash
-
+python3 -c 'import pty; pty.spawn("/bin/bash")'
 ```
 
 We now have a fully interactive **root shell**.
