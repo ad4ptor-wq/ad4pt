@@ -53,7 +53,7 @@ Visiting `https://{target_IP}:10000` revealed a **Webmin login page**.
 - Directory enumeration with **gobuster** produced no useful results:
 
 ```bash
-gobuster dir -u https://{target_IP}:10000 -w /usr/share/wordlists/dirb/common.txt
+gobuster dir -u https://{target_IP}:10000 -w /usr/share/wordlists/SecLists/Discovery/Web-Content/directory-list-2.3-medium.txt
 ```
 
 ---
@@ -96,8 +96,7 @@ exploit
 To upgrade the shell to a stable TTY:
 
 ```bash
-echo "import pty; pty.spawn('/bin/bash')" > /tmp/anyname.py
-python /tmp/anyname.py
+
 ```
 
 We now have a fully interactive **root shell**.
