@@ -1,6 +1,6 @@
 # TryHackMe — Easy Peasy Write-up
 
-📝 **Overview**
+ **Overview**
 
 - Room: Easy Peasy  
 - Difficulty: Easy  
@@ -8,7 +8,7 @@
 
 ---
 
-## 🔍 Enumeration with Nmap
+##  Enumeration with Nmap
 
 Scanning the target machine:
 
@@ -28,7 +28,7 @@ Result:
 
 ---
 
-## 💥 Exploiting the Machine
+##  Exploiting the Machine
 
 ### Task 1 – Flag 1
 Using **GoBuster**:
@@ -41,7 +41,7 @@ Found directory `/hidden` → `/whatever`.
 In the page source code we discovered a hidden hash.  
 Decoded it using **CyberChef** → `From Base62`.  
 
-✅ Flag 1 → **flag{f1rs7_fl4g}**
+ Flag 1 → **flag{f1rs7_fl4g}**
 
 ---
 
@@ -54,7 +54,7 @@ http://{IP}:65524/robots.txt
 
 Inside we find a strange User-Agent. Decoded it on md5hashing.net → got the flag.  
 
-✅ Flag 2 → **flag{1m_s3c0nd_fl4g}**
+ Flag 2 → **flag{1m_s3c0nd_fl4g}**
 
 ---
 
@@ -67,7 +67,7 @@ http://{IP}:65524
 
 A hash was found → decoded with Base62.  
 
-✅ Flag 3 → **flag{9fdafbd64c47471a8f54cd3fc64cd312}**  
+ Flag 3 → **flag{9fdafbd64c47471a8f54cd3fc64cd312}**  
 Hidden path: `/n0th1ng3ls3m4tt3r`
 
 ---
@@ -110,7 +110,7 @@ Enter the password → access granted.
 Inside the home directory we find `user.txt`.  
 The flag was encoded in ROT13 → decoded with CyberChef.  
 
-✅ User Flag → **flag{n0wits33msn0rm4l}**
+ User Flag → **flag{n0wits33msn0rm4l}**
 
 ---
 
@@ -133,19 +133,14 @@ nc -lvnp 4242
 
 When the connection popped, escalate privileges:
 
-```bash
-chmod +s /bin/bash
-/bin/bash -p
-```
-
 Now we are root.  
 In the root directory we find `.root.txt`.  
 
-✅ Root Flag → **flag{R00t_Acc3ss_C0mpl3t3}**
+ Root Flag → **flag{R00t_Acc3ss_C0mpl3t3}**
 
 ---
 
-## ✅ Summary of Flags
+##  Summary of Flags
 
 1. flag{f1rs7_fl4g}  
 2. flag{1m_s3c0nd_fl4g}  
@@ -157,4 +152,4 @@ In the root directory we find `.root.txt`.
 
 ---
 
-🎯 Machine completed successfully!  
+
