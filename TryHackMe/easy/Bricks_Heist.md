@@ -1,6 +1,6 @@
-# Bricks Heist \| TryHackMe Write-up
+# TryHack3M: Bricks Heist | TryHackMe Write-up
 
-📝 **Overview**
+ **Overview**
 
 -   Room: Bricks Heist\
 -   Difficulty: Easy\
@@ -9,7 +9,7 @@
 
 ------------------------------------------------------------------------
 
-## 🔍 Enumeration
+##  Enumeration
 
 Full port scan:
 
@@ -39,7 +39,7 @@ Discovered `wp-content` → WordPress site.
 
 ------------------------------------------------------------------------
 
-## 🔎 WordPress Scan
+##  WordPress Scan
 
 ``` bash
 wpscan --url https://bricks.thm/ --disable-tls-checks
@@ -57,7 +57,7 @@ Running the exploit gives us access as user `apache`.
 
 ------------------------------------------------------------------------
 
-## ⚡ Reverse Shell
+##  Reverse Shell
 
 Start listener:
 
@@ -76,7 +76,7 @@ Found a hidden `.txt` file containing the first flag.
 
 ------------------------------------------------------------------------
 
-## 🔐 wp-config.php
+##  wp-config.php
 
 ``` bash
 cat wp-config.php
@@ -91,7 +91,7 @@ Access granted, but not useful for the next question.
 
 ------------------------------------------------------------------------
 
-## ⚙️ Services
+## ⚙ Services
 
 Check running services:
 
@@ -109,7 +109,7 @@ systemctl cat ubuntu.server
 
 ------------------------------------------------------------------------
 
-## 🪤 Malicious Files
+##  Malicious Files
 
 Inside the directory we find `inet.conf`.
 
@@ -122,14 +122,14 @@ Decode with **CyberChef** → crypto wallet address.
 
 ------------------------------------------------------------------------
 
-## 💰 Blockchain OSINT
+##  Blockchain OSINT
 
 Check the address on [blockchair.com](https://blockchair.com/).\
 Transaction history links it to the **LockBit Ransomware Group**.
 
 ------------------------------------------------------------------------
 
-## ✅ Answers
+##  Answers
 
 1.  **User flag**:
 
@@ -145,7 +145,7 @@ Transaction history links it to the **LockBit Ransomware Group**.
 
 ------------------------------------------------------------------------
 
-## 🏁 Conclusion
+##  Conclusion
 
 -   Enumeration → WordPress discovered.\
 -   Exploited vulnerable theme → got `apache` shell.\
@@ -156,5 +156,3 @@ Transaction history links it to the **LockBit Ransomware Group**.
 
 ------------------------------------------------------------------------
 
-✍️ In a real-world scenario, the next step would be privilege escalation
-to root.
