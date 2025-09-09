@@ -1,13 +1,7 @@
----
-title: "TryHackMe - Source Write-up"
-author: "FAFS FSAFAF"
-date: "2025-09-09"
-categories: [TryHackMe, CTF, Writeup]
----
 
-# TryHackMe - Source Write-up
+# TryHackMe - Source 
 
-## 📌 Overview
+##  Overview
 - **Room:** Source  
 - **Difficulty:** Easy  
 - **Tags:** Enumeration, Webmin, Exploitation, Privilege Escalation
@@ -16,7 +10,7 @@ This room focuses on exploiting a vulnerable Webmin service to gain root access.
 
 ---
 
-## 📑 Table of Contents
+##  Table of Contents
 1. [Enumeration](#-enumeration)
 2. [Web Enumeration](#-web-enumeration)
 3. [Exploitation](#-exploitation)
@@ -26,18 +20,17 @@ This room focuses on exploiting a vulnerable Webmin service to gain root access.
 
 ---
 
-## 🔍 Enumeration
+##  Enumeration
 
 ### Nmap Scan
 We start by scanning the target with **nmap**:
 
 ```bash
-sudo nmap -sC -sV -T4 {target_IP}
+sudo nmap -sC -sV -Pn -p- {target_IP}
 ```
 
 - **-sC**: Run default scripts  
 - **-sV**: Detect service versions  
-- **-T4**: Aggressive timing for faster results  
 
 **Results:**
 
@@ -47,13 +40,13 @@ PORT      STATE SERVICE VERSION
 10000/tcp open  http    MiniServ 1.890 (Webmin httpd)
 ```
 
-✅ Open ports:  
+ Open ports:  
 - **22/tcp** → SSH  
 - **10000/tcp** → Webmin  
 
 ---
 
-## 🌐 Web Enumeration
+##  Web Enumeration
 Visiting `https://{target_IP}:10000` revealed a **Webmin login page**.
 
 - Default credentials were tested → **failed**  
@@ -65,7 +58,7 @@ gobuster dir -u https://{target_IP}:10000 -w /usr/share/wordlists/dirb/common.tx
 
 ---
 
-## 🎯 Exploitation
+##  Exploitation
 
 ### Searchsploit
 We check for Webmin exploits:
@@ -94,11 +87,11 @@ set SSL true
 exploit
 ```
 
-✅ This immediately provided a **root shell**.
+ This immediately provided a **root shell**.
 
 ---
 
-## 🖥️ Post-Exploitation
+##  Post-Exploitation
 
 To upgrade the shell to a stable TTY:
 
@@ -111,7 +104,7 @@ We now have a fully interactive **root shell**.
 
 ---
 
-## 🚩 Flags
+##  Flags
 
 Retrieve flags from the machine:
 
@@ -122,7 +115,7 @@ root.txt → THM{UPDATE_YOUR_INSTALL}
 
 ---
 
-## ✅ Conclusion
+##  Conclusion
 
 - Enumerated open ports with `nmap`  
 - Identified Webmin service on port 10000  
