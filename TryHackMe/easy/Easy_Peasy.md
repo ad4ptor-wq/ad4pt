@@ -13,7 +13,7 @@
 Scanning the target machine:
 
 ```bash
-sudo nmap -sC -sV -T4 {target_IP}
+sudo nmap -sC -sV -Pn -p- {target_IP}
 ```
 
 Result:  
@@ -34,7 +34,7 @@ Result:
 Using **GoBuster**:
 
 ```bash
-gobuster dir -w /usr/share/wordlists/dirb/common.txt -u http://{IP}:80/
+gobuster dir -w /usr/share/wordlists/dirbuster/directory-list-2.3-small.txt -u http://{IP}:80/
 ```
 
 Found directory `/hidden` → `/whatever`.  
