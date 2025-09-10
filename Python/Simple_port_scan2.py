@@ -1,3 +1,15 @@
+
+# Simple Port Scanner
+
+This is a simple port scanner written in Python.  
+It scans the first 100 TCP ports of a given host and prints out which ones are open.
+
+## Usage
+```bash
+python3 scanner.py
+
+
+
 import socket # socket modul for network conections
 
 # target host
