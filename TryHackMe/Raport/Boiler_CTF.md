@@ -25,7 +25,7 @@ The penetration test was conducted against the target **Boiler**
 4. **Privelege Escalation** - Abusing SUID binary ('find')
 5. **Post-Exploitation** - Proof of root access
 
---
+---
 
 ## 4. Find & Exploitation
 
