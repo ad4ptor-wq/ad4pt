@@ -4,7 +4,7 @@
 - **Room:** Boiler CTF  
 - **Level:** Easy  
 - **Date:** 10.09.2025  
-- **Pentester:** [Your Name/Nickname]  
+- **Pentester:** ad4pt  
 - **Target IP:** xxx.xxx.xxx.xxx  
 - **Goal:** Identify vulnerabilities and obtain root access.
 
