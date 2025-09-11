@@ -1,6 +1,6 @@
-# 🔓 TryHackMe - Boiler CTF Write-up
+#  TryHackMe - Boiler CTF Write-up
 
-## 📌 Room Info
+##  Room Info
 - **Name:** Boiler CTF  
 - **Difficulty:** Easy  
 - **Date Completed:** 10.09.2025  
@@ -8,7 +8,7 @@
 
 ---
 
-## 🔍 Enumeration
+##  Enumeration
 
 ### Nmap Scan
 First, I performed a full port scan:
@@ -25,7 +25,7 @@ sudo nmap -sV -sC -Pn -p- xxx.xxx.xxx.xxx
 
 ---
 
-## 🌐 Web Enumeration
+##  Web Enumeration
 Checking port 80, I found a website. Using **ffuf**, I discovered multiple directories:
 
 ```bash
@@ -43,7 +43,7 @@ On port **10000**, I found **MiniServ v1.930**, but no working exploit was avail
 
 ---
 
-## 💥 Exploitation
+##  Exploitation
 `sar2html v3.2.1` is vulnerable to **RCE**.  
 I used this public exploit: [sar2HTML_exploit](https://github.com/Jsmoreira02/sar2HTML_exploit)
 
@@ -59,7 +59,7 @@ Password: superduperp@$$
 
 ---
 
-## 🚪 SSH Access
+##  SSH Access
 Logged in via SSH:
 
 ```bash
@@ -68,7 +68,7 @@ ssh basterd@xxx.xxx.xxx.xxx -p 55007
 
 ---
 
-## 🔝 Privilege Escalation
+##  Privilege Escalation
 I searched for SUID binaries:
 
 ```bash
@@ -83,25 +83,25 @@ I escalated privileges using:
 find . -exec /bin/bash -p \; -quit
 ```
 
-Result: **root shell obtained** ✅
+Result: **root shell obtained** 
 
 ---
 
-## 🎯 Root Flag
+##  Root Flag
 ```bash
 cat /root/root.txt
 ```
 
-Flag successfully captured 🎉
+Flag successfully captured 
 
 ---
 
-## 📝 Conclusion
+##  Conclusion
 - Entry point: **sar2html v3.2.1 RCE**  
 - Credential discovery via `log.txt` → SSH access  
 - Privilege escalation via SUID `find` binary  
 - Root flag captured  
 
-**Boiler CTF pwned!** 🚀
+**Boiler CTF pwned!** 
 
 ---
