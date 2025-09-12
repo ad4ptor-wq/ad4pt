@@ -95,7 +95,7 @@ sudo -l
 ```bash
 sudo cat /root/root.txt
 ```
-✅ Got root flag.  
+ Got root flag.  
 
 ---
 
