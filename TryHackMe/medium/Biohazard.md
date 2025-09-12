@@ -1,6 +1,6 @@
 # TryHackMe - Biohazard Write-up
 
-## 🧩 Overview
+##  Overview
 - **Room:** Biohazard  
 - **Difficulty:** Medium  
 - **Theme:** Inspired by *Resident Evil* survival horror  
@@ -8,7 +8,7 @@
 
 ---
 
-## 🔍 Enumeration
+##  Enumeration
 
 ### Nmap Scan
 We start with an Nmap scan to identify open ports:
@@ -22,7 +22,7 @@ sudo nmap -Pn -sS -sV 10.10.178.120
 
 ---
 
-## 🏰 Task 1 - The Mansion
+##  Task 1 - The Mansion
 
 Exploring the web service revealed multiple rooms, puzzles, and encoded hints.
 
@@ -72,7 +72,7 @@ blue_jewel{e1d457e96cac640f863ec7bc475d48aa}
 
 ---
 
-## 🌿 Task 2 - The Guard House
+##  Task 2 - The Guard House
 
 Using FTP credentials, we downloaded hidden files and solved steganography puzzles.
 
@@ -117,7 +117,7 @@ helmet_key{458493193501d2b94bbab2e727f8db4b}
 
 ---
 
-## 🔁 Task 3 - The Revisit
+##  Task 3 - The Revisit
 
 Returning to old rooms unlocked new paths.
 
@@ -144,7 +144,7 @@ umbrella_guest : T_virus_rules
 
 ---
 
-## 🧪 Task 4 - Underground Laboratory
+##  Task 4 - Underground Laboratory
 
 Inside SSH session, we uncover the final stages.
 
@@ -182,7 +182,7 @@ cat root.txt
 
 ---
 
-## 🏆 Conclusion
+##  Conclusion
 
 The Biohazard room combined:  
 - Enumeration (web directories, encoded hints)  
