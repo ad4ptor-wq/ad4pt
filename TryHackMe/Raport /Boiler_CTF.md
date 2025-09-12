@@ -1,4 +1,4 @@
-# 🛡️ Pentest Report: Boiler CTF
+#  Pentest Report: Boiler CTF
 
 ## 1. Introduction
 - **Room:** Boiler CTF  
