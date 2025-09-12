@@ -114,7 +114,7 @@ The flag was encoded in ROT13 → decoded with CyberChef.
 
 ---
 
-## 🚀 Privilege Escalation
+##  Privilege Escalation
 
 Upload and run **linpeas.sh**.  
 Found script `.mysecretcronjob.sh`. It had only comments, so we injected a reverse shell from [revshells.com](https://www.revshells.com/).
