@@ -2,7 +2,7 @@
 
 ## 1. Introduction
 - **Date:** 12.09.2025  
-- **Pentester:** [your nickname]  
+- **Pentester:** ad4pt  
 - **Target IP:** xxx.xxx.xxx.xxx  
 - **Goal:** Identify vulnerabilities, exploit them, and obtain root access.  
 
@@ -118,7 +118,6 @@ sudo LD_PRELOAD=/tmp/shell.so /usr/bin/sky_backup_utility
 ```bash
 cat /root/root.txt
 ```
-**Flag:** `THM{...}`  
 
 ---
 
