@@ -1,4 +1,4 @@
-# 🛡️ Pentest Report: TryHackMe — Road (Medium)
+#  Pentest Report: TryHackMe — Road (Medium)
 
 ## 1. Introduction
 - **Date:** 12.09.2025  
