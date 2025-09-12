@@ -86,7 +86,7 @@ Result: **root access obtained**.
 ```
 cat /root/root.txt
 ```
-✅ Root flag successfully retrieved.  
+ Root flag successfully retrieved.  
 **Current status:** Full system compromise.
 
 ---
