@@ -91,7 +91,7 @@ Access granted, but not useful for the next question.
 
 ------------------------------------------------------------------------
 
-## ⚙ Services
+##  Services
 
 Check running services:
 
