@@ -2,7 +2,7 @@
 
 ## Machine Info
 - **Name:** WhiteRose (cyprusbank)  
-- **IP:** `10.10.107.216`  
+- **IP:** `xxx.xxx.xxx.xxx`  
 - **Difficulty:** Easy  
 - **Objective:** Get user.txt and root.txt flags  
 
@@ -12,7 +12,7 @@
 
 ### Nmap Scan
 ```bash
-nmap -sC -sV -T4 -oN nmap.out 10.10.107.216
+nmap -sC -sV -Pn -p- xxx.xxx.xxx.xxx
 ```
 
 **Results:**
@@ -23,7 +23,7 @@ At `http://10.10.107.216/` we are redirected to `http://cyprusbank.thm/`.
 Add to `/etc/hosts`:
 
 ```
-10.10.107.216   cyprusbank.thm
+xxx.xxx.xxx.xxx   cyprusbank.thm
 ```
 
 ---
@@ -42,7 +42,7 @@ ffuf -u http://cyprusbank.thm/ \
 Update `/etc/hosts`:
 
 ```
-10.10.107.216   cyprusbank.thm www.cyprusbank.thm admin.cyprusbank.thm
+xxx.xxx.xxx.xxx   cyprusbank.thm www.cyprusbank.thm admin.cyprusbank.thm
 ```
 
 ---
@@ -152,8 +152,7 @@ cat root.txt
 ## Flags
 - **user.txt** → `THM{4lways_upd4te_uR_d3p3nd3nc!3s}`  
 - **root.txt** → `THM{4nd_uR_p4ck4g3s}`  
+ Answers:
+- Tyrell Wellick’s phone number: `842-029-5701`
 
 ---
-
-## Answers
-- Tyrell Wellick’s phone number: `842-029-5701`
