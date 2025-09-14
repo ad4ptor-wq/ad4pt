@@ -13,12 +13,9 @@
 Run a basic nmap scan:
 
 ```bash
-sudo nmap -sC -sV -T4 xxx.xxx.xxx.xxx
+sudo nmap -sC -sV -Pn -p- xxx.xxx.xxx.xxx
 ```
 
-- `-sC` – run default scripts  
-- `-sV` – detect service versions  
-- `-T4` – faster scan timing  
 
 **Results:**
 ```
